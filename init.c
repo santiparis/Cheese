@@ -1,8 +1,7 @@
 #include "defs.h"
 
-int main(void) {
+void allInit(){
 
-  allInit();
-
+  
   return 0;
 }

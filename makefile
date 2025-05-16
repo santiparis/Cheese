@@ -1,2 +1,2 @@
 all:
-	gcc cheese.c -o cheese
+	gcc cheese.c init.c -o cheese
