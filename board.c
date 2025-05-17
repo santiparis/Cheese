@@ -20,6 +20,14 @@ void updateListsMaterial(S_BOARD* pos){
 
             if(piece == wK) pos->kingSq[color] = sq;
             if(piece == bK) pos->kingSq[color] = sq;
+
+            if(piece == wP){
+                SETBIT(pos->pawns[WHITE], SQ64(sq));
+                SETBIT(pos->pawns[BOTH], SQ64(sq));
+            } else if(piece == bP){
+                SETBIT(pos->pawns[BLACK], SQ64(sq));
+                SETBIT(pos->pawns[BOTH], SQ64(sq));
+            }
         }
     }
 }
@@ -62,20 +70,20 @@ int parseFen(char* fen, S_BOARD *pos){
             case '6':
             case '7':
             case '8':
-                piece = EMPTY;
-                count = *fen - '0';
-                break;
+            piece = EMPTY;
+            count = *fen - '0';
+            break;
 
             case '/':
             case ' ':
-                rank--;
-                file = FILE_A;
-                fen++;
-                continue;
+            rank--;
+            file = FILE_A;
+            fen++;
+            continue;
 
             default:
-                printf("FEN error \n");
-                return -1;
+            printf("FEN error \n");
+            return -1;
         }
 
         for(i = 0; i < count; i++){
@@ -99,11 +107,11 @@ int parseFen(char* fen, S_BOARD *pos){
             break;
         }
         switch (*fen){
-        case 'K': pos->castlePerm |= WKCA; break;
-        case 'Q': pos->castlePerm |= WQCA; break;
-        case 'k': pos->castlePerm |= BKCA; break;
-        case 'q': pos->castlePerm |= BQCA; break;
-        default: break;
+            case 'K': pos->castlePerm |= WKCA; break;
+            case 'Q': pos->castlePerm |= WQCA; break;
+            case 'k': pos->castlePerm |= BKCA; break;
+            case 'q': pos->castlePerm |= BQCA; break;
+            default: break;
         }
         fen++;
     }
@@ -122,6 +130,8 @@ int parseFen(char* fen, S_BOARD *pos){
     }
 
     pos->posKey = generatePosKey(pos);
+
+    updateListsMaterial(pos);
 
     return 0;
 }
@@ -185,10 +195,10 @@ void printBoard(const S_BOARD* pos){
     printf("Side: %c\n", sideChar[pos->side]);
     printf("EnPas: %d\n", pos->enPas);
     printf("Castle: %c%c%c%c\n",
-                pos->castlePerm&WKCA?'K':'-',
-                pos->castlePerm&WQCA?'Q':'-',
-                pos->castlePerm&BKCA?'k':'-',
-                pos->castlePerm&BQCA?'q':'-'
-            );
+        pos->castlePerm&WKCA?'K':'-',
+        pos->castlePerm&WQCA?'Q':'-',
+        pos->castlePerm&BKCA?'k':'-',
+        pos->castlePerm&BQCA?'q':'-'
+    );
     printf("PosKey: %llX\n", pos->posKey);
 }
