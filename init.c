@@ -14,7 +14,7 @@ U64 clearMask[64];
 
 U64 pieceKeys[13][120];
 U64 sideKey;
-U64 castleKey[16];
+U64 castleKeys[16];
 
 int filesBrd[BRD_SQ_NUM];
 int ranksBrd[BRD_SQ_NUM];
@@ -48,6 +48,11 @@ void initHashKeys(){
         for(index2 = 0; index2 < 120; ++index2){
             pieceKeys[index][index2] = RAND_64;
         }
+    }
+
+    sideKey = RAND_64;
+    for(index = 0; index < 16; ++index){
+        castleKeys[index] = RAND_64;
     }
 }
 

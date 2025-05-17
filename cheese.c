@@ -14,12 +14,12 @@ int main(void) {
     parseFen(FEN4, board);
 
     printBoard(board);
-    printf("\nwP:\n");
-    printBitBoard(board->pawns[WHITE]);
-    printf("\nbP:\n");
-    printBitBoard(board->pawns[BLACK]);
-    printf("\nall:\n");
-    printBitBoard(board->pawns[BOTH]);
+
+    ASSERT(checkBoard(board));
+
+    board->posKey ^= sideKey;
+
+    ASSERT(checkBoard(board));
 
     return EXIT_SUCCESS;
 }

@@ -110,7 +110,7 @@ extern U64 setMask[64];
 extern U64 clearMask[64];
 extern U64 pieceKeys[13][120];
 extern U64 sideKey;
-extern U64 castleKey[16];
+extern U64 castleKeys[16];
 extern char pceChar[];
 extern char sideChar[];
 extern char rankChar[];
@@ -143,5 +143,6 @@ extern void resetBoard(S_BOARD *pos);
 extern int parseFen(char* fen, S_BOARD *pos);
 extern void printBoard(const S_BOARD* pos);
 extern void updateListsMaterial(S_BOARD* pos);
+extern int checkBoard(const S_BOARD* pos);
 
 #endif
