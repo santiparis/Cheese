@@ -93,6 +93,8 @@ typedef struct{
 
 #define FR2SQ(f,r) ( (21 + (f) ) + ( (r) * 10 ) )
 #define SQ64(sq120) sq120ToSq64[sq120]
+#define POP(b) popBit(b)
+#define CNT(b) countBits(b)
 
 // Globals
 
@@ -101,7 +103,12 @@ extern int sq64ToSq120[64];
 
 // Function prototypes
 
+//init.c
 extern void allInit(void);
+
+// bitboards.c
 extern void printBitBoard(U64 bb);
+extern int popBit(U64 *bb);
+extern int countBits(U64 b);
 
 #endif
