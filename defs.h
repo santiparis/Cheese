@@ -51,18 +51,20 @@ enum {FALSE, TRUE};
 
 enum {WKCA = 1, WQCA = 2, BKCA = 4, BQCA = 8};
 
-typedef struct {
+typedef struct{
+    int move;
+    int score;
+} S_MOVE;
 
+typedef struct {
     int move;
     int castlePerm;
     int enPas;
     int fiftyMove;
     U64 posKey;
-
 } S_UNDO;
 
 typedef struct{
-
     int pieces[BRD_SQ_NUM];
     U64 pawns[3];
 
@@ -89,8 +91,20 @@ typedef struct{
 
     // Piece list
     int pList[13][10];
-
 } S_BOARD;
+
+// Game move
+
+#define FROMSQ(m) ((m) & 0x7F)
+#define TOSQ(m) (((m) >> 7) & 0x7F)
+#define CAPTURED(m) (((m) >> 14) & 0xF)
+#define PROMOTED(m) (((m) >> 20) & 0xF)
+#define MFLAGEP 0x40000
+#define MFLAGPS 0x80000
+#define MFLAGCA 0x1000000
+
+#define MFLAGCAP 0x7C000
+#define MFLAGPROM 0xF00000
 
 // Macros
 
@@ -157,5 +171,10 @@ extern int checkBoard(const S_BOARD* pos);
 
 // attack.c
 extern int sqAttacked(const int sq, const int side, const S_BOARD* pos);
+
+// io.c
+
+extern char* ptSq(const int sq);
+extern char* ptMove(const int move);
 
 #endif
