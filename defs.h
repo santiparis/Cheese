@@ -5,6 +5,7 @@
 #define BRD_SQ_NUM 120
 
 #define MAXGAMEMOVES 2048
+#define MAXPOSITIONMOVES 256
 
 #define START_FEN "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
 
@@ -55,6 +56,11 @@ typedef struct{
     int move;
     int score;
 } S_MOVE;
+
+typedef struct{
+    S_MOVE moves[MAXPOSITIONMOVES];
+    int count;
+} S_MOVELIST;
 
 typedef struct {
     int move;
@@ -173,8 +179,14 @@ extern int checkBoard(const S_BOARD* pos);
 extern int sqAttacked(const int sq, const int side, const S_BOARD* pos);
 
 // io.c
-
 extern char* ptSq(const int sq);
 extern char* ptMove(const int move);
+
+// validate.c
+extern int sqOnBoard(const int sq);
+extern int sideValid(const int side);
+extern int fileRankValid(const int fr);
+extern int pieceValidEmpty(const int pce);
+extern int pieceValid(const int pce);
 
 #endif

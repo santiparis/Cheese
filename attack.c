@@ -8,6 +8,11 @@ const int kiDir[8] = {-1, -10, 1, 10, -9, -11, 11, 9};
 int sqAttacked(const int sq, const int side, const S_BOARD* pos){
     int pce, index, t_sq, dir;
 
+    ASSERT(sqOnBoard(sq));
+    ASSERT(sideValid(side));
+    ASSERT(checkBoard(pos));
+
+    // Pawns
     if(side == WHITE){
         if(pos->pieces[sq-11] == wP || pos->pieces[sq-9] == wP){
             return TRUE;
@@ -18,6 +23,7 @@ int sqAttacked(const int sq, const int side, const S_BOARD* pos){
         }
     }
 
+    // Knights
     for(index = 0; index < 8; ++index){
         pce = pos->pieces[sq + knDir[index]];
         if(isKn(pce) && pieceCol[pce] == side){
@@ -25,6 +31,7 @@ int sqAttacked(const int sq, const int side, const S_BOARD* pos){
         }
     }
 
+    // Rooks
     for(index = 0; index < 4; ++index){
         dir = rkDir[index];
         t_sq = sq + dir;
@@ -41,6 +48,7 @@ int sqAttacked(const int sq, const int side, const S_BOARD* pos){
         }
     }
 
+    // Bishops
     for(index = 0; index < 4; ++index){
         dir = biDir[index];
         t_sq = sq + dir;
@@ -57,6 +65,7 @@ int sqAttacked(const int sq, const int side, const S_BOARD* pos){
         }
     }
 
+    // Kings
     for(index = 0; index < 8; ++index){
         pce = pos->pieces[sq + kiDir[index]];
         if(isKi(pce) && pieceCol[pce] == side){
