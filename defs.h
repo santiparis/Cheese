@@ -83,6 +83,7 @@ typedef struct{
   int bigPce[3];
   int majPce[3];
   int minPce[3];
+  int material[2];
 
   S_UNDO history[MAXGAMEMOVES];
 
@@ -115,6 +116,12 @@ extern char sideChar[];
 extern char rankChar[];
 extern char fileChar[];
 
+extern int pieceBig[13];
+extern int pieceMaj[13];
+extern int pieceMin[13];
+extern int pieceVal[13];
+extern int pieceCol[13];
+
 // Function prototypes
 
 //init.c
@@ -132,5 +139,6 @@ extern U64 generatePosKey(const S_BOARD *pos);
 extern void resetBoard(S_BOARD *pos);
 extern int parseFen(char* fen, S_BOARD *pos);
 extern void printBoard(const S_BOARD* pos);
+extern void updateListsMaterial(S_BOARD* pos);
 
 #endif

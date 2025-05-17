@@ -1,5 +1,29 @@
 #include "defs.h"
 
+void updateListsMaterial(S_BOARD* pos){
+    int piece, sq, index, color;
+
+    for(index = 0; index < BRD_SQ_NUM; ++index){
+        sq = index;
+        piece = pos->pieces[index];
+        if(piece != OFFBOARD && piece != EMPTY){
+            color = pieceCol[piece];
+
+            if(pieceBig[piece] == TRUE) pos->bigPce[color]++;
+            if(pieceMaj[piece] == TRUE) pos->majPce[color]++;
+            if(pieceMin[piece] == TRUE) pos->minPce[color]++;
+
+            pos->material[color] += pieceVal[piece];
+
+            pos->pList[piece][pos->pceNum[piece]] = sq;
+            pos->pceNum[piece]++;
+
+            if(piece == wK) pos->kingSq[color] = sq;
+            if(piece == bK) pos->kingSq[color] = sq;
+        }
+    }
+}
+
 int parseFen(char* fen, S_BOARD *pos){
     ASSERT(fen!=NULL);
     ASSERT(pos!=NULL);
