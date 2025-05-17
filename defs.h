@@ -102,6 +102,11 @@ typedef struct{
 #define CLRBIT(bb, sq) ((bb) &= clearMask[(sq)])
 #define SETBIT(bb, sq) ((bb) |= setMask[(sq)])
 
+#define isBQ(p) (pieceBishopQueen[(p)])
+#define isRQ(p) (pieceRookQueen[(p)])
+#define isKn(p) (pieceKnight[(p)])
+#define isKi(p) (pieceKing[(p)])
+
 // Globals
 
 extern int sq120ToSq64[BRD_SQ_NUM];
@@ -125,6 +130,11 @@ extern int pieceCol[13];
 extern int filesBrd[BRD_SQ_NUM];
 extern int ranksBrd[BRD_SQ_NUM];
 
+extern int pieceKnight[13];
+extern int pieceKing[13];
+extern int pieceRookQueen[13];
+extern int pieceBishopQueen[13];
+
 // Function prototypes
 
 //init.c
@@ -144,5 +154,8 @@ extern int parseFen(char* fen, S_BOARD *pos);
 extern void printBoard(const S_BOARD* pos);
 extern void updateListsMaterial(S_BOARD* pos);
 extern int checkBoard(const S_BOARD* pos);
+
+// attack.c
+extern int sqAttacked(const int sq, const int side, const S_BOARD* pos);
 
 #endif
