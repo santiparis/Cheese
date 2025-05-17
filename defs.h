@@ -7,6 +7,22 @@
 #define MAXGAMEMOVES 2048
 
 #include <stdio.h>
+#include <stdlib.h>
+
+#define DEBUG
+
+#ifndef DEBUG
+#define ASSERT(n)
+#else
+#define ASSERT(n) \
+if(!(n)) {  \
+printf("%s - Failed", #n);  \
+printf("On %s ", __DATE__); \
+printf("At %s ", __TIME__); \
+printf("In File %s ", __FILE__);  \
+printf("At line %d\n", __LINE__); \
+exit(EXIT_FAILURE);}
+#endif
 
 typedef unsigned long long U64;
 
@@ -68,6 +84,9 @@ typedef struct{
 
   S_UNDO history[MAXGAMEMOVES];
 
+  // Piece list
+  int pList[13][10];
+
 } S_BOARD;
 
 // Macros
@@ -84,4 +103,4 @@ extern int sq64ToSq120[64];
 extern void allInit(void);
 
 
-#endif 
+#endif
