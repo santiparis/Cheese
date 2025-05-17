@@ -3,25 +3,16 @@
 int main(void) {
 
   allInit();
-
+  int index = 0;
   U64 playBitBoard = 0ULL;
 
-  playBitBoard |= (1ULL << SQ64(D2));
-  playBitBoard |= (1ULL << SQ64(D3));
-  playBitBoard |= (1ULL << SQ64(D4));
-
   printf("\n");
+  SETBIT(playBitBoard, 61);
   printBitBoard(playBitBoard);
 
-  int sq64 = 0;
-  while(playBitBoard){
-    sq64 = POP(&playBitBoard);
-
-    printf("Popped: %d\n", sq64);
-    printBitBoard(playBitBoard);
-  }
-
   printf("\n");
+  CLRBIT(playBitBoard, 61);
+  printBitBoard(playBitBoard);
 
   return EXIT_SUCCESS;
 }
