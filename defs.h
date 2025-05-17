@@ -6,6 +6,8 @@
 
 #define MAXGAMEMOVES 2048
 
+#define START_FEN "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
+
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -42,7 +44,7 @@ enum {
   A5 = 61, B5, C5, D5, E5, F5, G5, H5,
   A6 = 71, B6, C6, D6, E6, F6, G6, H6,
   A7 = 81, B7, C7, D7, E7, F7, G7, H7,
-  A8 = 91, B8, C8, D8, E8, F8, G8, H8, NO_SQ
+  A8 = 91, B8, C8, D8, E8, F8, G8, H8, NO_SQ, OFFBOARD
 };
 
 enum {FALSE, TRUE};
@@ -92,7 +94,8 @@ typedef struct{
 // Macros
 
 #define FR2SQ(f,r) ( (21 + (f) ) + ( (r) * 10 ) )
-#define SQ64(sq120) sq120ToSq64[sq120]
+#define SQ64(sq120) (sq120ToSq64[(sq120)])
+#define SQ120(sq64) (sq64ToSq120[(sq64)])
 #define POP(b) popBit(b)
 #define CNT(b) countBits(b)
 #define CLRBIT(bb, sq) ((bb) &= clearMask[(sq)])
@@ -107,6 +110,10 @@ extern U64 clearMask[64];
 extern U64 pieceKeys[13][120];
 extern U64 sideKey;
 extern U64 castleKey[16];
+extern char pceChar[];
+extern char sideChar[];
+extern char rankChar[];
+extern char fileChar[];
 
 // Function prototypes
 
@@ -120,5 +127,10 @@ extern int countBits(U64 b);
 
 // hashkeys.c
 extern U64 generatePosKey(const S_BOARD *pos);
+
+// board.c
+extern void resetBoard(S_BOARD *pos);
+extern int parseFen(char* fen, S_BOARD *pos);
+extern void printBoard(const S_BOARD* pos);
 
 #endif
