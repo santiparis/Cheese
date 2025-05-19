@@ -181,6 +181,7 @@ extern int sqAttacked(const int sq, const int side, const S_BOARD* pos);
 // io.c
 extern char* ptSq(const int sq);
 extern char* ptMove(const int move);
+extern void printMoveList(const S_MOVELIST* list);
 
 // validate.c
 extern int sqOnBoard(const int sq);
@@ -188,5 +189,8 @@ extern int sideValid(const int side);
 extern int fileRankValid(const int fr);
 extern int pieceValidEmpty(const int pce);
 extern int pieceValid(const int pce);
+
+// movegen.c
+extern void generateAllMoves(const S_BOARD* pos, S_MOVELIST* list);
 
 #endif

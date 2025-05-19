@@ -38,3 +38,18 @@ char* ptMove(const int move){
 
     return mvStr;
 }
+
+void printMoveList(const S_MOVELIST* list){
+    int index = 0;
+    int score = 0;
+    int move = 0;
+    printf("Movelist:\n");
+
+    for(index = 0; index < list->count; ++index){
+        move = list->moves[index].move;
+        score = list->moves[index].score;
+
+        printf("Move: %d > %s (score: %d)\n", index+1, ptMove(move), score);
+    }
+    printf("MoveList Total %d moves\n\n", list->count);
+}
