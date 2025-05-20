@@ -195,4 +195,8 @@ extern int pieceValid(const int pce);
 // movegen.c
 extern void generateAllMoves(const S_BOARD* pos, S_MOVELIST* list);
 
+// makemove.c
+extern int makeMove(S_BOARD* pos, int move);
+extern void takeMove(S_BOARD* pos);
+
 #endif

@@ -26,7 +26,7 @@ int sqAttacked(const int sq, const int side, const S_BOARD* pos){
     // Knights
     for(index = 0; index < 8; ++index){
         pce = pos->pieces[sq + knDir[index]];
-        if(isKn(pce) && pieceCol[pce] == side){
+        if(sqOnBoard(sq + knDir[index]) && isKn(pce) && pieceCol[pce] == side){
             return TRUE;
         }
     }
@@ -38,7 +38,7 @@ int sqAttacked(const int sq, const int side, const S_BOARD* pos){
         pce = pos->pieces[t_sq];
         while(pce != OFFBOARD){
             if(pce != EMPTY){
-                if(isRQ(pce) && pieceCol[pce] == side){
+                if(sqOnBoard(sq + dir) && isRQ(pce) && pieceCol[pce] == side){
                     return TRUE;
                 }
                 break;
@@ -55,7 +55,7 @@ int sqAttacked(const int sq, const int side, const S_BOARD* pos){
         pce = pos->pieces[t_sq];
         while(pce != OFFBOARD){
             if(pce != EMPTY){
-                if(isBQ(pce) && pieceCol[pce] == side){
+                if(sqOnBoard(sq + dir) && isBQ(pce) && pieceCol[pce] == side){
                     return TRUE;
                 }
                 break;

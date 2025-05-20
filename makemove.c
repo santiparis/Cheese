@@ -140,8 +140,7 @@ int makeMove(S_BOARD* pos, int move){
         if(side == WHITE) clearPiece(to-10, pos);
         else clearPiece(to+10, pos);
     } else if(move & MFLAGCA){
-        switch (to)
-        {
+        switch (to){
         case C1:
             movePiece(A1, D1, pos);
             break;
@@ -207,7 +206,7 @@ int makeMove(S_BOARD* pos, int move){
         addPiece(to, pos, prPce);
     }
 
-    if(pieceKing[pos->pieces[from]]){
+    if(pieceKing[pos->pieces[to]]){
         pos->kingSq[pos->side] = to;
     }
 
@@ -217,9 +216,66 @@ int makeMove(S_BOARD* pos, int move){
     ASSERT(checkBoard(pos));
 
     if(sqAttacked(pos->kingSq[side], pos->side, pos)){
-        //takeMove(pos);
+        takeMove(pos);
         return FALSE;
     }
 
     return TRUE;
+}
+
+void takeMove(S_BOARD* pos){
+    ASSERT(checkBoard(pos));
+
+    pos->hisPly--;
+    pos->ply--;
+
+    int move = pos->history[pos->hisPly].move;
+    int from = FROMSQ(move);
+    int to = TOSQ(move);
+
+    ASSERT(sqOnBoard(from));
+    ASSERT(sqOnBoard(to));
+
+    if(pos->enPas != NO_SQ) HASH_EP;
+    HASH_CA;
+
+    pos->castlePerm = pos->history[pos->hisPly].castlePerm;
+    pos->fiftyMove = pos->history[pos->hisPly].fiftyMove;
+    pos->enPas = pos->history[pos->hisPly].enPas;
+
+    if(pos->enPas != NO_SQ) HASH_EP;
+    HASH_CA;
+
+    pos->side ^= 1;
+    HASH_SIDE;
+
+    if(MFLAGEP & move){
+        if(pos->side == WHITE) addPiece(to-10, pos, bP);
+        else addPiece(to+10, pos, wP);
+    } else if(MFLAGCA & move){
+        switch (to){
+        case C1: movePiece(D1, A1, pos); break;
+        case C8: movePiece(D8, A8, pos); break;
+        case G1: movePiece(F1, H1, pos); break;
+        case G8: movePiece(F8, H8, pos); break;
+        default:ASSERT(FALSE); break;
+        }
+    }
+
+    movePiece(to, from, pos);
+
+    if(pieceKing[pos->pieces[from]]) pos->kingSq[pos->side] = from;
+
+    int captured = CAPTURED(move);
+    if(captured != EMPTY){
+        ASSERT(pieceValid(captured));
+        addPiece(to, pos, captured);
+    }
+
+    if(PROMOTED(move) != EMPTY){
+        ASSERT(pieceValid(PROMOTED(move)) && !piecePawn[PROMOTED(move)]);
+        clearPiece(from, pos);
+        addPiece(from, pos, (pieceCol[PROMOTED(move)] == WHITE ? wP : bP));
+    }
+    ASSERT(checkBoard(pos));
 }
