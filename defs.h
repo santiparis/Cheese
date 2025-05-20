@@ -155,6 +155,7 @@ extern int pieceKing[13];
 extern int pieceRookQueen[13];
 extern int pieceBishopQueen[13];
 extern int pieceSlides[13];
+extern int piecePawn[13];
 
 // Function prototypes
 
