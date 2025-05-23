@@ -26,7 +26,11 @@ int sqAttacked(const int sq, const int side, const S_BOARD* pos){
     // Knights
     for(index = 0; index < 8; ++index){
         pce = pos->pieces[sq + knDir[index]];
-        if(sqOnBoard(sq + knDir[index]) && isKn(pce) && pieceCol[pce] == side){
+        if(pce == OFFBOARD || pce == EMPTY){
+            continue;
+        }
+
+        if(isKn(pce) && pieceCol[pce] == side){
             return TRUE;
         }
     }
@@ -68,6 +72,11 @@ int sqAttacked(const int sq, const int side, const S_BOARD* pos){
     // Kings
     for(index = 0; index < 8; ++index){
         pce = pos->pieces[sq + kiDir[index]];
+
+        if(pce == OFFBOARD || pce == EMPTY){
+            continue;
+        }
+
         if(isKi(pce) && pieceCol[pce] == side){
             return TRUE;
         }

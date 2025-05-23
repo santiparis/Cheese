@@ -1,38 +1,14 @@
 #include "defs.h"
 
+#define PERFTFEN "r3k2r/p1ppqpb1/bn2pnp1/3PN3/1p2P3/2N2Q1p/PPPBBPPP/R3K2R w KQkq - 0 1"
+
 int main(void) {
     allInit();
     S_BOARD board[1];
     S_MOVELIST list[1];
 
-    parseFen(START_FEN, board);
-    generateAllMoves(board, list);
-
-    printMoveList(list);
-
-    int moveNum = 0;
-    int move = 0;
-
-    printBoard(board);
-
-    getchar();
-
-    for(moveNum = 0; moveNum < list->count; ++moveNum){
-        move = list->moves[moveNum].move;
-
-        if(!makeMove(board, move)){
-            continue;
-        }
-
-        printf("\nMADE: %s\n", ptMove(move));
-        printBoard(board);
-
-        takeMove(board);
-        printf("\nTAKEN: %s\n", ptMove(move));
-        printBoard(board);
-
-        getchar();
-    }
+    parseFen(PERFTFEN, board);
+    perftTest(3, board);
 
     return EXIT_SUCCESS;
 }
